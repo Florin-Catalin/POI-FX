@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import javafx.scene.layout.Priority;
 
 import java.util.List;
 
@@ -67,11 +68,13 @@ public class MapWebViewWindow {
             }
         });
 
-        // JavaFX search bar (optional, can be removed if not needed)
+        // JavaFX search bar
         TextField searchField = new TextField();
         searchField.setPromptText("Search marker...");
-        Button searchButton = new Button("Search");
 
+        Button searchButton = new Button("Search");
+        searchButton.getStyleClass().addAll("btn","btn-success");
+        System.out.println(searchButton.getStyleClass());
         searchButton.setOnAction(e -> {
             String searchText = searchField.getText().replace("'", "\\'");
             String script = """
@@ -98,14 +101,20 @@ public class MapWebViewWindow {
             engine.executeScript(script);
         });
 
-        HBox searchBox = new HBox(5, searchField, searchButton);
+        HBox searchBox = new HBox(10, searchField, searchButton);
+        searchBox.getStyleClass().add("btn-toolbar"); // Optional: BootstrapFX toolbar style
+        HBox.setHgrow(searchField, Priority.ALWAYS);
+
         BorderPane root = new BorderPane();
         root.setTop(searchBox);
         root.setCenter(webView);
 
+        Scene scene = new Scene(root, 800, 650);
+        scene.getStylesheets().add(MapWebViewWindow.class.getResource("/bootstrapfx.css").toExternalForm());
+
         Stage stage = new Stage();
         stage.setTitle("Interactive Map (WebView)");
-        stage.setScene(new Scene(root, 800, 650));
+        stage.setScene(scene);
         stage.show();
 
         return new MapController(engine);

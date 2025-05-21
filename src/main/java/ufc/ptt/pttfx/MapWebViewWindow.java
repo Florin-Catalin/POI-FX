@@ -103,11 +103,14 @@ public class MapWebViewWindow {
 
         HBox searchBox = new HBox(10, searchField, searchButton);
         searchBox.getStyleClass().add("btn-toolbar"); // Optional: BootstrapFX toolbar style
+        // Add margin and padding for spacing
+        searchBox.setStyle("-fx-padding: 16 16 16 16; -fx-background-color: transparent;");
         HBox.setHgrow(searchField, Priority.ALWAYS);
 
         BorderPane root = new BorderPane();
         root.setTop(searchBox);
         root.setCenter(webView);
+        root.setStyle("-fx-padding: 0 0 16 0;"); // space below search bar
 
         Scene scene = new Scene(root, 800, 650);
         scene.getStylesheets().add(MapWebViewWindow.class.getResource("/bootstrapfx.css").toExternalForm());

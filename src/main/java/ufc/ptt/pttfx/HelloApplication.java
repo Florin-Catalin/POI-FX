@@ -7,6 +7,8 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.util.List;
+
 public class HelloApplication extends Application {
 
     private Stage createWindow(String title, String buttonText, String helloText, boolean addMapButton) {
@@ -18,7 +20,13 @@ public class HelloApplication extends Application {
 
         if (addMapButton) {
             Button mapButton = new Button("Show Map");
-            mapButton.setOnAction(e -> MapWebViewWindow.show());
+            // Example usage in HelloApplication.java
+            mapButton.setOnAction(e -> MapWebViewWindow.show(
+                    List.of(
+                            new Marker(51.505, -0.09, "Marker 1"),
+                            new Marker(51.51, -0.1, "Marker 2")
+                    )
+            ));
             vbox.getChildren().add(mapButton);
         }
 

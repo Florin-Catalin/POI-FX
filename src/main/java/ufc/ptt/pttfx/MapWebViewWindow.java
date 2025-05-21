@@ -1,7 +1,10 @@
-// filepath: /home/florin/PTTFx/src/main/java/ufc/ptt/pttfx/MapWebViewWindow.java
 package ufc.ptt.pttfx;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
@@ -20,21 +23,59 @@ public class MapWebViewWindow {
             if (newDoc != null) {
                 for (Marker marker : markers) {
                     String script = String.format(
-                            "window.markerClusterGroup.addLayer(L.marker([%f, %f]).bindPopup('%s'));",
-                            marker.latitude(), marker.longitude(), marker.popup().replace("'", "\\'")
+                            "window.markerClusterGroup.addLayer(L.marker([%f, %f], {title: '%s'}).bindPopup('%s'));",
+                            marker.latitude(), marker.longitude(),
+                            marker.popup().replace("'", "\\'"),
+                            marker.popup().replace("'", "\\'")
                     );
                     engine.executeScript(script);
                 }
             }
         });
 
+        // JavaFX search bar
+        TextField searchField = new TextField();
+        searchField.setPromptText("Search marker...");
+        Button searchButton = new Button("Search");
+
+        searchButton.setOnAction(e -> {
+            String searchText = searchField.getText().replace("'", "\\'");
+            // JavaScript: find marker by title and open popup
+            String script = """
+                (function() {
+                    var found = null;
+                    if(window.markerClusterGroup && window.markerClusterGroup.getLayers) {
+                        var layers = window.markerClusterGroup.getLayers();
+                        for (var i = 0; i < layers.length; i++) {
+                            var m = layers[i];
+                            if (m.options && m.options.title && m.options.title.toLowerCase() === '%s'.toLowerCase()) {
+                                found = m;
+                                break;
+                            }
+                        }
+                        if (found) {
+                            window.map.setView(found.getLatLng(), 20);
+                            found.openPopup();
+                        } else {
+                            alert('Marker not found');
+                        }
+                    }
+                })();
+                """.formatted(searchText);
+            engine.executeScript(script);
+        });
+
+        HBox searchBox = new HBox(5, searchField, searchButton);
+        BorderPane root = new BorderPane();
+        root.setTop(searchBox);
+        root.setCenter(webView);
+
         Stage stage = new Stage();
         stage.setTitle("Interactive Map (WebView)");
-        stage.setScene(new Scene(webView, 800, 600));
+        stage.setScene(new Scene(root, 800, 650));
         stage.show();
     }
 
-    // Convenience method for a single marker
     public static void show(Marker marker) {
         show(List.of(marker));
     }

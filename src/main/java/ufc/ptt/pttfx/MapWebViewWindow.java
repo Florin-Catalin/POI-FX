@@ -12,13 +12,47 @@ import javafx.stage.Stage;
 import java.util.List;
 
 public class MapWebViewWindow {
-    public static void show(List<Marker> markers) {
+
+    public static class MapController {
+        private final WebEngine engine;
+
+        public MapController(WebEngine engine) {
+            this.engine = engine;
+        }
+
+        public void centerOnMarker(Marker marker) {
+            String script = String.format(
+                    """
+                    (function() {
+                        var found = null;
+                        if(window.markerClusterGroup && window.markerClusterGroup.getLayers) {
+                            var layers = window.markerClusterGroup.getLayers();
+                            for (var i = 0; i < layers.length; i++) {
+                                var m = layers[i];
+                                if (m.options && m.options.title && m.options.title === '%s') {
+                                    found = m;
+                                    break;
+                                }
+                            }
+                            if (found) {
+                                window.map.setView(found.getLatLng(), 20);
+                                found.openPopup();
+                            }
+                        }
+                    })();
+                    """,
+                    marker.popup().replace("'", "\\'")
+            );
+            engine.executeScript(script);
+        }
+    }
+
+    public static MapController show(List<Marker> markers) {
         WebView webView = new WebView();
         String url = MapWebViewWindow.class.getResource("/ufc/ptt/pttfx/map.html").toExternalForm();
         WebEngine engine = webView.getEngine();
         engine.load(url);
 
-        // Add markers after the document is loaded
         engine.documentProperty().addListener((obs, oldDoc, newDoc) -> {
             if (newDoc != null) {
                 for (Marker marker : markers) {
@@ -33,14 +67,13 @@ public class MapWebViewWindow {
             }
         });
 
-        // JavaFX search bar
+        // JavaFX search bar (optional, can be removed if not needed)
         TextField searchField = new TextField();
         searchField.setPromptText("Search marker...");
         Button searchButton = new Button("Search");
 
         searchButton.setOnAction(e -> {
             String searchText = searchField.getText().replace("'", "\\'");
-            // JavaScript: find marker by title and open popup
             String script = """
                 (function() {
                     var found = null;
@@ -74,9 +107,17 @@ public class MapWebViewWindow {
         stage.setTitle("Interactive Map (WebView)");
         stage.setScene(new Scene(root, 800, 650));
         stage.show();
+
+        return new MapController(engine);
     }
 
     public static void show(Marker marker) {
         show(List.of(marker));
     }
 }
+
+
+
+
+
+

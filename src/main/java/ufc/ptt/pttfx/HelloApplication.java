@@ -12,41 +12,34 @@ import java.util.ArrayList;
 
 public class HelloApplication extends Application {
 
-    private Stage createWindow(String title, String buttonText, String helloText, boolean addMapButton) {
+    private Stage createHelloWindow() {
         Stage stage = new Stage();
         Label label = new Label();
-        Button button = new Button(buttonText);
-        button.setOnAction(e -> label.setText(helloText));
+        Button button = new Button("Say Hello from Window 1");
+        button.setOnAction(e -> label.setText("Hello from Window 1!"));
         VBox vbox = new VBox(10, button, label);
 
-
-        if (addMapButton) {
-            Button mapButton = new Button("Show Map");
-            mapButton.setOnAction(e -> {
-                List<Marker> markers = new ArrayList<>();
-                for (int i = 0; i < 10000; i++) {
-                    double lat = 51.505 + Math.random() * 0.1 - 0.05;
-                    double lon = -0.09 + Math.random() * 0.1 - 0.05;
-                    markers.add(new Marker(lat, lon, "Marker " + (i + 1)));
-                }
-                MapWebViewWindow.show(markers);
-            });
-            vbox.getChildren().add(mapButton);
-        }
-
         Scene scene = new Scene(vbox, 300, 200);
-        stage.setTitle(title);
+        stage.setTitle("Window 1");
         stage.setScene(scene);
         return stage;
     }
 
     @Override
     public void start(Stage primaryStage) {
-        Stage window1 = createWindow("Window 1", "Say Hello from Window 1", "Hello from Window 1!", true);
-        Stage window2 = createWindow("Window 2", "Say Hello from Window 2", "Hello from Window 2!", false);
+        // Window 1: Say Hello
+        Stage window1 = createHelloWindow();
+
+        // Window 2: Map opens directly
+        List<Marker> markers = new ArrayList<>();
+        for (int i = 0; i < 10000; i++) {
+            double lat = 51.505 + Math.random() * 0.1 - 0.05;
+            double lon = -0.09 + Math.random() * 0.1 - 0.05;
+            markers.add(new Marker(lat, lon, "Marker " + (i + 1)));
+        }
+        MapWebViewWindow.show(markers);
 
         window1.show();
-        window2.show();
     }
 
     public static void main(String[] args) {

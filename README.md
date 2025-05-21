@@ -13,9 +13,9 @@ This project is a JavaFX application demonstrating:
 - [x] Add an interactive map (Leaflet via WebView)
 - [ ] Switch between different types of maps (e.g., OpenStreetMap, satellite, etc.)
 - [ ] Add more map markers and popups
-- [ ] Add a `Marker` class in Java
-- [ ] Add markers programmatically via Java code
-- [ ] Cluster overlapping markers when zoomed out and show a count
+- [x] Add a `Marker` class in Java
+- [x] Add markers programmatically via Java code
+- [x] Cluster overlapping markers when zoomed out and show a count
 - [ ] Send many markers asynchronously and add them to the map
 - [ ] Display all markers in a list in the UI
 - [ ] Improve UI/UX for window and map navigation

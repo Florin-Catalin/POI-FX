@@ -20,7 +20,7 @@ public class MapWebViewWindow {
             if (newDoc != null) {
                 for (Marker marker : markers) {
                     String script = String.format(
-                            "L.marker([%f, %f]).addTo(window.map).bindPopup('%s');",
+                            "window.markerClusterGroup.addLayer(L.marker([%f, %f]).bindPopup('%s'));",
                             marker.latitude(), marker.longitude(), marker.popup().replace("'", "\\'")
                     );
                     engine.executeScript(script);

@@ -8,6 +8,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.List;
+import java.util.ArrayList;
 
 public class HelloApplication extends Application {
 
@@ -18,15 +19,18 @@ public class HelloApplication extends Application {
         button.setOnAction(e -> label.setText(helloText));
         VBox vbox = new VBox(10, button, label);
 
+
         if (addMapButton) {
             Button mapButton = new Button("Show Map");
-            // Example usage in HelloApplication.java
-            mapButton.setOnAction(e -> MapWebViewWindow.show(
-                    List.of(
-                            new Marker(51.505, -0.09, "Marker 1"),
-                            new Marker(51.51, -0.1, "Marker 2")
-                    )
-            ));
+            mapButton.setOnAction(e -> {
+                List<Marker> markers = new ArrayList<>();
+                for (int i = 0; i < 10000; i++) {
+                    double lat = 51.505 + Math.random() * 0.1 - 0.05;
+                    double lon = -0.09 + Math.random() * 0.1 - 0.05;
+                    markers.add(new Marker(lat, lon, "Marker " + (i + 1)));
+                }
+                MapWebViewWindow.show(markers);
+            });
             vbox.getChildren().add(mapButton);
         }
 

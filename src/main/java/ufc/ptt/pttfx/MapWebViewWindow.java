@@ -58,7 +58,7 @@ public class MapWebViewWindow {
             if (newDoc != null) {
                 for (Marker marker : markers) {
                     String script = String.format(
-                            "window.markerClusterGroup.addLayer(L.marker([%f, %f], {title: '%s'}).bindPopup('%s'));",
+                            "window.markerClusterGroup.addLayer(L.marker([%f, %f], {icon: window.customMarkerIcon, title: '%s'}).bindPopup('%s'));",
                             marker.latitude(), marker.longitude(),
                             marker.popup().replace("'", "\\'"),
                             marker.popup().replace("'", "\\'")

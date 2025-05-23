@@ -6,6 +6,7 @@ module ufc.ptt.pttfx {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires javafx.web;
+    requires org.slf4j;
 
     opens ufc.ptt.pttfx to javafx.fxml;
     exports ufc.ptt.pttfx;

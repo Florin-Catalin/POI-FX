@@ -12,7 +12,7 @@ This project is a JavaFX application demonstrating:
 - [x] Display the app on different windows (Window 1, Window 2, Map Window)
 - [x] Add an interactive map (Leaflet via WebView)
 - [ ] Switch between different types of maps (e.g., OpenStreetMap, satellite, etc.)
-- [ ] Add more map markers and popups
+- [x] Add more map markers and popups
 - [x] Add a `Marker` class in Java
 - [x] Add markers programmatically via Java code
 - [x] Cluster overlapping markers when zoomed out and show a count
@@ -23,6 +23,25 @@ This project is a JavaFX application demonstrating:
 - [ ] Package and document the application for distribution
 
 ---
+
+## TODO: Marker Features
+
+- [x] Cluster markers that are close together, with a count
+- [ ] Filter markers by category, type, or attribute
+- [ ] Group/layer markers and toggle their visibility
+- [ ] Use custom marker icons or colors based on properties
+- [ ] Add a heatmap overlay for marker density
+- [ ] Implement marker "spiderfying" for overlapping markers
+- [ ] Animate markers when added, removed, or updated
+- [ ] Show rich content (images, actions) in marker popups
+- [ ] Allow marker dragging to update location
+- [ ] Highlight or zoom to markers matching a search query
+- [ ] Cluster markers by attribute (not just proximity)
+- [ ] Animate markers over a timeline (historical data)
+- [ ] Enable multi-marker selection and bulk actions
+- [ ] Calculate and display routes between markers
+- [ ] Show tooltips on marker hover
+- [ ] Snap markers to grid or map features
 
 ## How to Run
 

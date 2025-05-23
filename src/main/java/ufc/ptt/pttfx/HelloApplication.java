@@ -15,10 +15,9 @@ public class HelloApplication extends Application {
     private Stage createMarkerListWindow(List<Marker> markers, MapWebViewWindow.MapController mapController) {
         Stage stage = new Stage();
         ListView<Marker> listView = new ListView<>(FXCollections.observableList(markers));
-        listView.setPrefHeight(200); // Show about 5 items (adjust as needed)
-        listView.setFixedCellSize(40); // Adjust for your marker string length
+        listView.setPrefHeight(200);
+        listView.setFixedCellSize(40);
 
-        // When a marker is clicked, center it on the map
         listView.setOnMouseClicked(event -> {
             Marker selected = listView.getSelectionModel().getSelectedItem();
             if (selected != null) {
@@ -37,7 +36,7 @@ public class HelloApplication extends Application {
     public void start(Stage primaryStage) {
         // Generate markers
         List<Marker> markers = new ArrayList<>();
-        for (int i = 0; i < 30000; i++) {
+        for (int i = 0; i < 20_000; i++) {
             double lat = 51.505 + Math.random() * 0.1 - 0.05;
             double lon = -0.09 + Math.random() * 0.1 - 0.05;
             markers.add(new Marker(lat, lon, "Marker " + (i + 1)));
@@ -49,6 +48,10 @@ public class HelloApplication extends Application {
         // Create and show the marker list window
         Stage window1 = createMarkerListWindow(markers, mapController);
         window1.show();
+
+        // Create and show the DockFX window as the third stage
+        Stage dockFXStage = new Stage();
+        new DockFX().start(dockFXStage);
     }
 
     public static void main(String[] args) {

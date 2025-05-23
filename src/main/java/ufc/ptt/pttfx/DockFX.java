@@ -23,9 +23,6 @@ import dockfx.DockNode;
 import dockfx.DockPane;
 import dockfx.DockPosition;
 
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Random;
 
@@ -49,29 +46,29 @@ public class DockFX extends Application {
         HTMLEditor htmlEditor = new HTMLEditor();
 
         String html = """
-<html>
-<head>
-    <title></title>
-</head>
-<body>
-<h2>Hello, World!</h2>
-
-<p>Welcome to the DockFX demo, the fully featured docking library for JavaFX! This library is
-    completely gratis and open source under the GNU Lesser General Public License version 3. Please see
-    the included LICENSE file for further details. The source code can be downloaded
-    <a href="https://github.com/RobertBColton/DockFX">from GitHub</a> where binary releases are
-    regularly made available.</p>
-
-<p>A number of features are supported:</p>
-
-<ul>
-    <li>Full documentation</li>
-    <li>Gratis and open source</li>
-    <li>CSS and styling support</li>
-</ul>
-</body>
-</html>
-""";
+                        <html>
+                        <head>
+                            <title></title>
+                        </head>
+                        <body>
+                        <h2>Hello, World!</h2>
+                        
+                        <p>Welcome to the DockFX demo, the fully featured docking library for JavaFX! This library is
+                            completely gratis and open source under the GNU Lesser General Public License version 3. Please see
+                            the included LICENSE file for further details. The source code can be downloaded
+                            <a href="https://github.com/RobertBColton/DockFX">from GitHub</a> where binary releases are
+                            regularly made available.</p>
+                        
+                        <p>A number of features are supported:</p>
+                        
+                        <ul>
+                            <li>Full documentation</li>
+                            <li>Gratis and open source</li>
+                            <li>CSS and styling support</li>
+                        </ul>
+                        </body>
+                        </html>
+                       """;
 
             htmlEditor.setHtmlText(html);
 

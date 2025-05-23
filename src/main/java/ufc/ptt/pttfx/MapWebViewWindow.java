@@ -58,8 +58,9 @@ public class MapWebViewWindow {
             if (newDoc != null) {
                 for (Marker marker : markers) {
                     String script = String.format(
-                            "window.markerClusterGroup.addLayer(L.marker([%f, %f], {icon: window.customMarkerIcon, title: '%s'}).bindPopup('%s'));",
+                            "window.markerClusterGroup.addLayer(L.marker([%f, %f], {icon: window.createRectIcon('%s'), title: '%s'}).bindPopup('%s'));",
                             marker.latitude(), marker.longitude(),
+                            marker.popup().replace("'", "\\'"),
                             marker.popup().replace("'", "\\'"),
                             marker.popup().replace("'", "\\'")
                     );
@@ -71,6 +72,7 @@ public class MapWebViewWindow {
         // JavaFX search bar
         TextField searchField = new TextField();
         searchField.setPromptText("Search marker...");
+        searchField.setPrefWidth(30);
 
         Button searchButton = new Button("Search");
         searchButton.getStyleClass().addAll("btn","btn-success");
